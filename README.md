@@ -1,5 +1,5 @@
 # I2C sniffer on ESP32
-This code catches I2C communication running on a fast CPU that are conected on I2C lines as a passive listener.
+This code catches I2C communication running on an ESP32 board that are conected to I2C BUS lines as a passive listener.
 
 ## Background story
 The code was used to reverse engineer a tool that uses a I2C comunication between main unit and temperature measure board. The task was to catch the communication between the units.
