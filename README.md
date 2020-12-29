@@ -10,7 +10,7 @@ The board that runs the program is a ESP32 board, because it works on 240MHz. Th
 * IDE: Visual Studio Code + PlatformIO - but can be any Arduino IDE
 * Platform: Arduino for ESP32
 * Board: Any ESP32 board can be used, just match the pins with the used in the code.
-* Used pins: I2C uses two pins, one for clock and one for data. In the program the the following pins are in use: GPIO12 for SDA, GPIO13 for SCL. This setup can be changed, but the hardware and the software setup should be in synch.
+* Used pins: I2C uses two pins, one for clock and one for data. In the program the following pins are in use: GPIO12 for SDA, GPIO13 for SCL. This setup can be changed, but the hardware and the software setup should be in synch.
 
 ## Way of working
 This is not connecting to the BUS as an I2C device. It is neither a Master, nor a Slave and never puts data on any line.
