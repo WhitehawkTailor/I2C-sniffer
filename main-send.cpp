@@ -286,7 +286,8 @@ return ret;
     Write here any communication with a server
 
 */
-void sendMsgOut(String argStr){
+void sendMsgOut(String argStr)
+{
   argStr.replace(" ","");
   Serial.println();
   Serial.println(argStr);
@@ -296,49 +297,55 @@ void sendMsgOut(String argStr){
 /////////////////////////////////
 //// MAIN entry point of the program
 /////////////////////////////////
-void setup(){
-Serial.begin(115200);
-#ifdef I2CTEST
-pinMode(PIN_SCL, OUTPUT);   
-pinMode(PIN_SDA, OUTPUT); 
-#else
-//Define pins for SCL, SDA
-pinMode(PIN_SCL, INPUT_PULLUP);   
-pinMode(PIN_SDA, INPUT_PULLUP);
-//pinMode(PIN_SCL, INPUT);   
-//pinMode(PIN_SDA, INPUT);
+void setup()
+{
+    Serial.begin(115200);
+    
+    #ifdef I2CTEST
+    pinMode(PIN_SCL, OUTPUT);   
+    pinMode(PIN_SDA, OUTPUT); 
+    #else
+    //Define pins for SCL, SDA
+    pinMode(PIN_SCL, INPUT_PULLUP);   
+    pinMode(PIN_SDA, INPUT_PULLUP);
+    //pinMode(PIN_SCL, INPUT);   
+    //pinMode(PIN_SDA, INPUT);
 
 
-//reset variables
-resetI2cVariable();
+    //reset variables
+    resetI2cVariable();
 
-//Atach interrupt handlers to the interrupts on GPIOs
-attachInterrupt(PIN_SCL, i2cTriggerOnRaisingSCL, RISING); //trigger for reading data from SDA
-attachInterrupt(PIN_SDA, i2cTriggerOnChangeSDA, CHANGE); //for I2C START and STOP
-#endif
+    //Atach interrupt handlers to the interrupts on GPIOs
+    attachInterrupt(PIN_SCL, i2cTriggerOnRaisingSCL, RISING); //trigger for reading data from SDA
+    attachInterrupt(PIN_SDA, i2cTriggerOnChangeSDA, CHANGE); //for I2C START and STOP
 
-WiFi.begin(ssid, password);
-  Serial.println("Connecting");
-  while(WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("");
-  Serial.print("Connected to WiFi network with IP Address: ");
-  Serial.println(WiFi.localIP());
-  
+
+    //v1.1 Extension for WiFi sending
+    WiFi.begin(ssid, password);
+    Serial.println("Connecting");
+    while(WiFi.status() != WL_CONNECTED) 
+    {
+        delay(500);
+        Serial.print(".");
+    }
+    Serial.println("");
+    Serial.print("Connected to WiFi network with IP Address: ");
+    Serial.println(WiFi.localIP());
+
+
+    #endif
+
+
+
 }//END of setup
 
 /**
 
     LOOP
-
     v1.0
-
     @desc Writes I2C mcommunication to the serial if there is any.
-
+    
     v1.1
-
     @desc uses sendMsgOut to send I2C mcommunication to the specified server and format given by the msgToServer variable
     */
     void loop()
