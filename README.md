@@ -41,6 +41,21 @@ Output example:
 S1101101W+00110000+00001000+s
 ````
 
+# Limitations
+In case of continuous I2C communication the program may show improper data after a while or even crash.
+
+The reason is that the program uses a fix sized array to store the incoming I2C bits. If it gets overloaded then bits from the communication may be missed.
+The display mechanism reads the content from the array and resets the array writing mechanism.
+
+If the incoming data comes faster than the display mechanism deletes the content of the array, then the array will be overwritten after a while.
+Since the overload situation is not handled it may crash the application too.
+In my case this solution was acceptable, because I2C communication was not continuous, but measure unit sends data in every 10sec or so only.
+
+Workaround should be to increase the size of the array. It works if the data flow is not continuous, just longer then the original size of the buffer and the display period.
+
+Another simple solution could be to prevent the crash is to detect the overwrite situation by checking the writing position of the buffer and stop the writing, or even the whole program.
+
+
 # Caution!!!
 If you connect the pins directly to the I2C BUS in operation you may harm either the unit you observe or your ESP32 device (anything can go wrong, like mismatching lines, volt levels, inputs or outputs, etc.). Being on the safe side a simple solution can save your devices when you isolate your tool from the observed device. For this purpose I highly recommend the IC that I also use [ISO154x Low-Power Bidirectional I2C Isolators](https://www.ti.com/lit/ds/symlink/iso1540.pdf?ts=1603436321085&ref_url=https%253A%252F%252Fwww.google.de%252F). One side you connects the ground, power and I2C lines that you want to listen and to the other side you connects your independent ESP32 based board that runs the code with its own ground, power and I2C lines.
 
