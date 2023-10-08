@@ -288,7 +288,7 @@ return ret;
 */
 void sendMsgOut(String argStr)
 {
-  argStr.replace(" ","");
+  argStr.replace("\n","");
   Serial.println();
   Serial.println(argStr);
   Serial.println();
